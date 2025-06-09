@@ -5,6 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.example.trailverse.user.dto.UserDto;
 import org.example.trailverse.user.domain.User;
 import org.example.trailverse.user.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/trailvers")
 public class UserController {
+    private static final Logger log = LoggerFactory.getLogger(UserController.class);
     private final UserService userService;
 
     @GetMapping("/userlist")
@@ -29,6 +32,7 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody UserDto userDto) {
+        log.info("사용자 들어왔니?:[][]",userDto.getUserId(),userDto.getPassword());
         User user = userService.findUserId(userDto.getUserId());
         if(user==null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
