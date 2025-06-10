@@ -34,8 +34,7 @@ public class HikingController {
      * 안드로이드 앱에서 전송한 등산 데이터를 저장합니다
      */
     @PostMapping("/sessions")
-    public ResponseEntity<Response> saveHikingSession(
-            @Valid @RequestBody HikingSessionRequestDto requestDto) {
+    public ResponseEntity<Response> saveHikingSession(@RequestBody HikingSessionRequestDto requestDto) {
 
         log.info("등산 세션 저장 요청 수신 - 사용자: {}, 시작시간: {}",
                 requestDto.getUserId(), requestDto.getStartTime());

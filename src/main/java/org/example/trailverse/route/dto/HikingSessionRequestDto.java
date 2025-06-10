@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.NotNull;
+//import org.antlr.v4.runtime.misc.NotNull;
 import org.example.trailverse.route.repository.HikingSessionRepository;
 
 import java.time.LocalDateTime;
@@ -18,7 +20,7 @@ import java.util.List;
 
 public class HikingSessionRequestDto {
 
-    @NotBlank(message = "사용자 ID는 필수입니다")
+    @NotNull(message = "사용자 ID는 필수입니다")
     @JsonProperty("userId")
     private String userId;
 

@@ -2,6 +2,7 @@ package org.example.trailverse.route.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.example.trailverse.user.domain.User;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -20,6 +21,8 @@ public class HikingSession {
 
     @Column(name = "user_id", nullable = false, length = 100)
     private String userId;
+//    @ManyToOne
+//    private User user;
 
     @Column(name = "start_time", nullable = false)
     private LocalDateTime startTime;

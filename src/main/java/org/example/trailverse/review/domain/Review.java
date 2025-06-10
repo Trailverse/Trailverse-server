@@ -6,7 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.example.trailverse.review.dto.ReviewDto;
-import org.example.trailverse.route.domain.Route;
+import org.example.trailverse.route.domain.HikingSession;
+
 import org.example.trailverse.user.domain.User;
 @Getter
 @Entity
@@ -23,12 +24,12 @@ public class Review {
     private String img;
 
     @ManyToOne
-    private Route route; // 어떤 산
+    private HikingSession route; // 어떤 산
     @ManyToOne
     private User user; //누가
 
 
-    public static Review from(ReviewDto reviewDto,Route route,User user,String image){
+    public static Review from(ReviewDto reviewDto,HikingSession route,User user,String image){
         return Review.builder()
                 .reviewText(reviewDto.getReviewText())
                 .route(route)
@@ -46,7 +47,7 @@ public class Review {
     public void setUser(User user){
         this.user = user;
     }
-    public void setRoute(Route route){
+    public void setRoute(HikingSession route){
         this.route = route;
     }
 }

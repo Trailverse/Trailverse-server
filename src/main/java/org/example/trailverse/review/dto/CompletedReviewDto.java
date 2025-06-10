@@ -15,7 +15,7 @@ public class CompletedReviewDto {
     public static CompletedReviewDto from(Review review){
         return CompletedReviewDto.builder()
                 .reviewId(review.getId())
-                .routeId(review.getRoute().getId())
+                .routeId(review.getRoute().getSessionId())
                 .userId(review.getUser().getUserId())
                 .reviewText(review.getReviewText())
                 .img(review.getImg())

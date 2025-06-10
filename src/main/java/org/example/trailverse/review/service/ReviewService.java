@@ -5,9 +5,10 @@ import org.example.trailverse.review.domain.Review;
 import org.example.trailverse.review.dto.CompletedReviewDto;
 import org.example.trailverse.review.dto.ReviewDto;
 import org.example.trailverse.review.repository.ReviewRepository;
-import org.example.trailverse.route.domain.Route;
+import org.example.trailverse.route.domain.HikingSession;
+
 import org.example.trailverse.user.domain.User;
-import org.springframework.boot.autoconfigure.ssl.SslProperties;
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,7 +29,7 @@ public class ReviewService {
     private final ReviewRepository reviewRepository;
 
     //별점눌렀을때 각 길에 대한 리뷰 전체 조회
-    public List<CompletedReviewDto> findByRouteReviewAll(Route route){
+    public List<CompletedReviewDto> findByRouteReviewAll(HikingSession route){
         List<Review> route1= reviewRepository.findByRoute(route);
 
         List<CompletedReviewDto> reviewDtoList = new ArrayList<>();
@@ -79,7 +80,7 @@ public class ReviewService {
 //        return path.toString();
 //    }
     //경로종료시 발생하는 리뷰 초기화
-    public void resetSave(User user, Route route){
+    public void resetSave(User user, HikingSession route){
 
         Review review = new Review();
         review.setReviewText(null);

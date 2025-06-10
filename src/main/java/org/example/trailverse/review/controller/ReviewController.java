@@ -4,8 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.example.trailverse.review.domain.Review;
 import org.example.trailverse.review.dto.*;
 import org.example.trailverse.review.service.ReviewService;
-import org.example.trailverse.route.domain.Route;
-import org.example.trailverse.route.service.RouteGpsService;
+import org.example.trailverse.route.domain.HikingSession;
+
+import org.example.trailverse.route.service.HikingService;
+
 import org.example.trailverse.user.domain.User;
 import org.example.trailverse.user.service.UserService;
 import org.slf4j.Logger;
@@ -25,15 +27,15 @@ import java.util.Map;
 public class ReviewController {
     private static final Logger log = LoggerFactory.getLogger(ReviewController.class);
     private final ReviewService reviewService;
-    private final RouteService routeServices;
+    private final HikingService hikingService;
     private final UserService userService;
 
     //별점을 눌렀을때 그 길에 대한 리뷰전테 조회->별점을 루르면 화면 전화할때 주소
     @GetMapping("/byAll")
     public List<CompletedReviewDto> byReviewAll(@RequestParam Long routeId){
-
-        Route routeID= routeServices.findById(path_id);
-        log.info("길id:{}",routeID.getId());
+        HikingSession routeID = hikingService.getHikingSessionById(routeId);
+//        Route routeID= routeServices.findById(path_id);
+        log.info("길id:{}",routeID.getSessionId());
         return reviewService.findByRouteReviewAll(routeID);
     }
 
@@ -49,7 +51,7 @@ public class ReviewController {
     @PostMapping(value = "/reset")
     public ResponseEntity<?> reset(@RequestBody ResetReviewDto request){
         User user = userService.findUserId(request.getUserId());
-        Route route = routeServices.findById(request.getRouteId());
+        HikingSession route = hikingService.getHikingSessionById(request.getRouteId());
         reviewService.resetSave(user,route);
         return ResponseEntity.ok(Map.of("message", "리뷰초기화 완료"));
     }
