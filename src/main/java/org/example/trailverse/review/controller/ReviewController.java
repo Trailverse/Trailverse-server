@@ -1,13 +1,11 @@
 package org.example.trailverse.review.controller;
 
 import lombok.RequiredArgsConstructor;
-import lombok.Value;
 import org.example.trailverse.review.domain.Review;
 import org.example.trailverse.review.dto.*;
 import org.example.trailverse.review.service.ReviewService;
 import org.example.trailverse.route.domain.Route;
 import org.example.trailverse.route.service.RouteGpsService;
-import org.example.trailverse.route.service.RouteService;
 import org.example.trailverse.user.domain.User;
 import org.example.trailverse.user.service.UserService;
 import org.slf4j.Logger;
@@ -34,7 +32,7 @@ public class ReviewController {
     @GetMapping("/byAll")
     public List<CompletedReviewDto> byReviewAll(@RequestParam Long routeId){
 
-        Route routeID= routeServices.findById(routeId);
+        Route routeID= routeServices.findById(path_id);
         log.info("길id:{}",routeID.getId());
         return reviewService.findByRouteReviewAll(routeID);
     }
