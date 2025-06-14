@@ -6,16 +6,19 @@ import org.example.trailverse.review.dto.*;
 import org.example.trailverse.review.service.ReviewService;
 import org.example.trailverse.route.domain.HikingSession;
 
+import org.example.trailverse.route.dto.HikingSessionResponseDto;
 import org.example.trailverse.route.service.HikingService;
 
 import org.example.trailverse.user.domain.User;
 import org.example.trailverse.user.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +59,7 @@ public class ReviewController {
         return ResponseEntity.ok(Map.of("message", "리뷰초기화 완료"));
     }
 
-    @GetMapping(value = "/viewReview")//작성해야하는 리뷰 리스트 반환
+    @GetMapping(value = "/myPage")//작성해야하는 리뷰 리스트 반환
     public List<ReviewDto> viewList(@RequestParam String userId){
         log.info("들어왓나?:{}",userId);
 
@@ -78,4 +81,20 @@ public class ReviewController {
     public CompletedReviewDto detailReviewPage(@RequestParam Long reviewId){
         return reviewService.detail(reviewId);
     }
+
+//    @GetMapping("/myPage")
+//    public List<ReviewDto> myPage(@RequestParam String userId){
+//        List<HikingSessionResponseDto> reviewDtoList = new ArrayList<>();
+//        User user = userService.findUserId(userId);
+//        if(user == null){
+//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "유저를 찾을 수 없습니다: " + userId);
+//        }
+//        List<HikingSession> reviews = hikingService.getHikingSessionsByUserId(userId);
+//
+//        for(HikingSession review : reviews){
+//            reviewDtoList.add(HikingSessionResponseDto);
+//        }
+//        return reviewDtoList;
+//    }
 }
+

@@ -1,6 +1,8 @@
 package org.example.trailverse.route.dto;
 
 import lombok.*;
+import org.example.trailverse.route.domain.HikingSession;
+
 import java.time.LocalDateTime;
 
 @Getter
@@ -53,4 +55,5 @@ public class HikingSessionResponseDto {
         this.createdAt = createdAt;
         this.message = message;
     }
+
 }

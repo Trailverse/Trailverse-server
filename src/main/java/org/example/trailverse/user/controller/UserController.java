@@ -2,6 +2,12 @@ package org.example.trailverse.user.controller;
 
 
 import lombok.RequiredArgsConstructor;
+import org.example.trailverse.review.domain.Review;
+import org.example.trailverse.review.dto.ReviewDto;
+import org.example.trailverse.route.domain.HikingPath;
+import org.example.trailverse.route.domain.HikingSession;
+import org.example.trailverse.route.dto.HikingSessionResponseDto;
+import org.example.trailverse.route.service.HikingService;
 import org.example.trailverse.user.dto.UserDto;
 import org.example.trailverse.user.domain.User;
 import org.example.trailverse.user.service.UserService;
@@ -10,7 +16,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -19,6 +27,7 @@ import java.util.List;
 public class UserController {
     private static final Logger log = LoggerFactory.getLogger(UserController.class);
     private final UserService userService;
+    private final HikingService hikingService;
 
     @GetMapping("/userlist")
     public List<User> userList() {
