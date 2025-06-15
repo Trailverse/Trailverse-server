@@ -51,19 +51,26 @@ public class ReviewController {
     }
 
     //저장돼었을대 userid가 routeid사용한 받아오면 초기롸롤 null로 하고 초기 save로 해야함
-    @PostMapping(value = "/reset")
-    public ResponseEntity<?> reset(@RequestBody ResetReviewDto request){
-        User user = userService.findUserId(request.getUserId());
-        HikingSession route = hikingService.getHikingSessionById(request.getRouteId());
-        reviewService.resetSave(user,route);
-        return ResponseEntity.ok(Map.of("message", "리뷰초기화 완료"));
+//    @PostMapping(value = "/reset")
+//    public ResponseEntity<?> reset(@RequestBody ResetReviewDto request){
+//        User user = userService.findUserId(request.getUserId());
+//        HikingSession route = hikingService.getHikingSessionById(request.getRouteId());
+//        reviewService.resetSave(user,route);
+//        return ResponseEntity.ok(Map.of("message", "리뷰초기화 완료"));
+//    }
+
+
+    //리뷰쓰기 번트 -> 리뷰 상세페이지 get
+    @GetMapping("/detailReview")
+    public CompletedReviewDto detailReviewPage(@RequestParam Long reviewId){
+        return reviewService.detail(reviewId);
     }
 
     @GetMapping(value = "/myPage")//작성해야하는 리뷰 리스트 반환
     public List<ReviewDto> viewList(@RequestParam String userId){
         log.info("들어왓나?:{}",userId);
 
-       User user = userService.findUserId(userId);
+        User user = userService.findUserId(userId);
 
         log.info("id값이 나올까요?:{}",user.getUserId());
 
@@ -76,25 +83,5 @@ public class ReviewController {
         }
         return reviewDtoList;
     }
-    //리뷰쓰기 번트 -> 리뷰 상세페이지 get
-    @GetMapping("/detailReview")
-    public CompletedReviewDto detailReviewPage(@RequestParam Long reviewId){
-        return reviewService.detail(reviewId);
-    }
-
-//    @GetMapping("/myPage")
-//    public List<ReviewDto> myPage(@RequestParam String userId){
-//        List<HikingSessionResponseDto> reviewDtoList = new ArrayList<>();
-//        User user = userService.findUserId(userId);
-//        if(user == null){
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "유저를 찾을 수 없습니다: " + userId);
-//        }
-//        List<HikingSession> reviews = hikingService.getHikingSessionsByUserId(userId);
-//
-//        for(HikingSession review : reviews){
-//            reviewDtoList.add(HikingSessionResponseDto);
-//        }
-//        return reviewDtoList;
-//    }
 }
 

@@ -23,6 +23,8 @@ public class Review {
 
     private String img;
 
+    private String routeName;
+
     @ManyToOne
     private HikingSession route; // 어떤 산
     @ManyToOne
@@ -50,4 +52,5 @@ public class Review {
     public void setRoute(HikingSession route){
         this.route = route;
     }
+    public void setRouteName(String routeName){this.routeName = routeName;}
 }

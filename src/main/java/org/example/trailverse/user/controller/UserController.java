@@ -4,6 +4,7 @@ package org.example.trailverse.user.controller;
 import lombok.RequiredArgsConstructor;
 import org.example.trailverse.review.domain.Review;
 import org.example.trailverse.review.dto.ReviewDto;
+import org.example.trailverse.review.service.ReviewService;
 import org.example.trailverse.route.domain.HikingPath;
 import org.example.trailverse.route.domain.HikingSession;
 import org.example.trailverse.route.dto.HikingSessionResponseDto;
@@ -28,6 +29,7 @@ public class UserController {
     private static final Logger log = LoggerFactory.getLogger(UserController.class);
     private final UserService userService;
     private final HikingService hikingService;
+    private final ReviewService reviewService;
 
     @GetMapping("/userlist")
     public List<User> userList() {
@@ -41,7 +43,7 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody UserDto userDto) {
-        log.info("사용자 들어왔니?:[][]",userDto.getUserId(),userDto.getPassword());
+        log.info("사용자 들어왔니?:{}{}",userDto.getUserId(),userDto.getPassword());
         User user = userService.findUserId(userDto.getUserId());
         if(user==null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)

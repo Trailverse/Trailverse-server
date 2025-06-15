@@ -2,10 +2,13 @@ package org.example.trailverse.route.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.example.trailverse.review.service.ReviewService;
 import org.example.trailverse.route.domain.HikingSession;
 import org.example.trailverse.route.dto.HikingSessionRequestDto;
 import org.example.trailverse.route.dto.HikingSessionResponseDto;
 import org.example.trailverse.route.service.HikingService;
+import org.example.trailverse.user.domain.User;
+import org.example.trailverse.user.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -22,9 +25,13 @@ import java.util.List;
 public class HikingController {
 
     private final HikingService hikingService;
+    private final UserService userService;
+    private final ReviewService reviewService;
 
-    public HikingController(HikingService hikingService) {
+    public HikingController(HikingService hikingService, UserService userService, ReviewService reviewService) {
         this.hikingService = hikingService;
+        this.userService = userService;
+        this.reviewService = reviewService;
     }
 
     Logger log = LoggerFactory.getLogger(HikingController.class);
@@ -38,13 +45,22 @@ public class HikingController {
 
         log.info("등산 세션 저장 요청 수신 - 사용자: {}, 시작시간: {}",
                 requestDto.getUserId(), requestDto.getStartTime());
-
+        User user = userService.findUserId(requestDto.getUserId());
         try {
-            HikingSessionResponseDto response = hikingService.saveHikingSession(requestDto);
+            HikingSessionResponseDto response = hikingService.saveHikingSession(requestDto,user);
 
             log.info("등산 세션 저장 성공 - 세션 ID: {}", response.getSessionId());
 
-            return ResponseEntity.status(HttpStatus.CREATED).body(new Response(200, "등산 저장 성공", response));
+//            User user = userService.findUserId(requestDto.getUserId());
+            if (user == null) {
+                log.error("User not found for ID: {}", user.getUserId());
+            }
+            HikingSession savedSession = hikingService.getHikingSessionById(response.getSessionId());
+            
+            reviewService.resetSave(user,savedSession);
+            
+
+            return ResponseEntity.status(HttpStatus.CREATED).body(new Response(200, "등산 저장 성공 및 리뷰 초기화 성공", response));
 
         } catch (Exception e) {
             log.error("등산 세션 저장 실패: {}", e.getMessage(), e);

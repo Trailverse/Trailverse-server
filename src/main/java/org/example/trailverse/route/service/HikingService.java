@@ -8,6 +8,7 @@ import org.example.trailverse.route.dto.HikingSessionRequestDto;
 import org.example.trailverse.route.dto.HikingSessionResponseDto;
 import org.example.trailverse.route.dto.PathPointDto;
 import org.example.trailverse.route.repository.HikingSessionRepository;
+import org.example.trailverse.user.domain.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -30,7 +31,7 @@ public class HikingService {
     /**
      * 등산 세션 데이터를 저장합니다
      */
-    public HikingSessionResponseDto saveHikingSession(HikingSessionRequestDto requestDto) {
+    public HikingSessionResponseDto saveHikingSession(HikingSessionRequestDto requestDto, User user) {
         try {
             log.info("등산 세션 저장 시작 - 사용자: {}", requestDto.getUserId());
 

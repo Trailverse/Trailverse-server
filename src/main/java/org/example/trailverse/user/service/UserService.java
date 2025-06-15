@@ -24,7 +24,7 @@ public class UserService {
     public User findUserId(String userId){
         log.info("나왔을까요? user:{}",userId);
         User user = userRepository.findByUserId(userId);
-
+        log.info("userId is Id:{}", user.getId());
         return user;
     }
 

@@ -17,6 +17,7 @@ public class ReviewDto {
     private Long routeId;
     private String userId;
     private String reviewText;
+    private String routeName;
 
     public static ReviewDto from(Review review){
         return ReviewDto.builder()
@@ -24,6 +25,7 @@ public class ReviewDto {
                 .routeId(review.getRoute().getSessionId())
                 .userId(review.getUser().getUserId())
                 .reviewText(review.getReviewText())
+                .routeName(review.getRouteName())
                 .build();
     }
 
