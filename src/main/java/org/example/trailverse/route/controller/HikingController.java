@@ -96,11 +96,11 @@ public class HikingController {
     @GetMapping("/sessions/user/{userId}")
     public ResponseEntity<List<HikingSession>> getHikingSessionsByUserId(
             @PathVariable String userId) {
-
+        User user = userService.findUserId(userId);
         log.info("사용자 {}의 등산 기록 조회 요청", userId);
 
         try {
-            List<HikingSession> sessions = hikingService.getHikingSessionsByUserId(userId);
+            List<HikingSession> sessions = hikingService.getHikingSessionsByUserId(user);
             return ResponseEntity.ok(sessions);
 
         } catch (Exception e) {

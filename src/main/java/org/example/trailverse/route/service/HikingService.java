@@ -37,7 +37,7 @@ public class HikingService {
 
             // HikingSession 엔티티 생성
             HikingSession hikingSession = HikingSession.toEntity(
-                    requestDto.getUserId(),
+                    user,
                     requestDto.getStartTime(),
                     requestDto.getEndTime(),
                     requestDto.getTotalDistance());
@@ -65,7 +65,7 @@ public class HikingService {
             // 응답 DTO 생성
             return new HikingSessionResponseDto(
                     savedSession.getSessionId(),
-                    savedSession.getUserId(),
+                    savedSession.getUser().getUserId(),
                     savedSession.getStartTime(),
                     savedSession.getEndTime(),
                     savedSession.getTotalDistance(),
@@ -82,9 +82,10 @@ public class HikingService {
      * 특정 사용자의 등산 기록 목록을 조회합니다
      */
     @Transactional(readOnly = true)
-    public List<HikingSession> getHikingSessionsByUserId(String userId) {
+    public List<HikingSession> getHikingSessionsByUserId(User userId) {
         log.info("사용자 {}의 등산 기록 조회", userId);
-        return hikingSessionRepository.findByUserIdOrderByStartTimeDesc(userId);
+
+        return hikingSessionRepository.findByUserOrderByStartTimeDesc(userId);
     }
 
     /**
